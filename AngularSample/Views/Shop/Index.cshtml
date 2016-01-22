@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Sklep.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="alert alert-info" ng-show="loading">
+    <p>Loading...</p>
+</div>
+<h2>{{name}}</h2>
+
+<input type="text" ng-model="model" />
+<p>{{model}}</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>InStock</th>
+            <th>Price</th>
+            <th>Add</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="product in products">
+        <td>{{product.Id}}</td>
+        <td>{{product.Name}}</td>
+        <td>{{product.InStock}}</td>
+        <td>{{product.Price}}</td>
+        <td><button class="btn" ng-click="add(product)"><span class="glyphicon glyphicon-plus"></span></button></td>
+    </tr>
+    </tbody>
+</table>

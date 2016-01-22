@@ -1,0 +1,67 @@
+﻿
+CREATE DATABASE ASP_SQL_SAMPLE
+GO
+USE ASP_SQL_SAMPLE
+GO
+---------------------------------------------------------------
+
+CREATE TABLE Persons
+(
+	Id INT IDENTITY(1,1) NOT NULL,
+	FirstName NVARCHAR(150),
+	LastName NVARCHAR(150),
+	Age INT 
+);
+
+CREATE TABLE Pets
+(
+	Id INT IDENTITY (1,1) NOT NULL,
+	Name NVARCHAR(150),
+	PetType NVARCHAR(150),
+	OwnerId INT NOT NULL,
+);
+GO
+---------------------------------------------------------------
+
+ALTER TABLE Persons
+ADD CONSTRAINT pk_PersonID
+PRIMARY KEY(Id)
+
+ALTER TABLE Pets
+ADD CONSTRAINT fk_Pets
+FOREIGN KEY (OwnerId)
+REFERENCES Persons(Id)
+
+ALTER TABLE Pets
+ADD CONSTRAINT pk_petsID
+PRIMARY KEY(Id)
+GO
+---------------------------------------------------------------
+
+INSERT INTO Persons (FirstName, LastName, Age) VALUES ('Kamil', 'Kot', 21);
+INSERT INTO Persons (FirstName, LastName, Age) VALUES ('Bartek', 'Kot', 21);
+INSERT INTO Persons (FirstName, LastName, Age) VALUES ('Icek', 'Kot', 21);
+
+INSERT INTO Pets (Name, PetType, OwnerId) VALUES ('Puszek', 'Kot', 1);
+INSERT INTO Pets (Name, PetType, OwnerId) VALUES ('w butach', 'Kot', 1);
+INSERT INTO Pets (Name, PetType, OwnerId) VALUES ('bez buta', 'Kot', 2);
+INSERT INTO Pets (Name, PetType, OwnerId) VALUES ('krzywa twarz', 'Kot', 3);
+insert into Pets (Name, PetType, OwnerId) values ('zezolz', 'bestia', 1);
+
+---------------------------------------------------------------
+
+--SELECT Count(Id) FROM Persons
+
+--SELECT * FROM Persons
+--WHERE FirstName LIKE 'K%'
+
+--SELECT * FROM Persons JOIN Pets 
+--ON Persons.Id=Pets.OwnerId
+
+--SELECT PetType, COUNT(*) as PetsCount FROM Pets 
+--GROUP BY PetType
+--HAVING COUNT(*)>1
+
+---------------------------------------------------------------
+--UPDATE Persons SET FirstName='Piernik', LastName='Kopernik' WHERE Id=2
+

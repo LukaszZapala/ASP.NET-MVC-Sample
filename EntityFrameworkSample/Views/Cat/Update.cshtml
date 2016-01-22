@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Update Twoją starą
+        </div>
+        <div class="panel-body">
+            <form class="form form-horizontal" method="POST" action="/Cat/UpdatePet">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name)
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.PetType)
+                    @Html.TextBoxFor(x => x.PetType, new { @class = "form-control", @readonly = true })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.OwnerId)
+                    @Html.TextBoxFor(x => x.OwnerId, new { @class = "form-control" })
+                </div>
+                <div class="form-control">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-plus"> Update</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

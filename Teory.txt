@@ -1,0 +1,122 @@
+
+ASP.NET to technologia za pomoc¹, której tworzymy aplikacje pracuj¹c¹ na serwerze, który komunikuje siê z u¿ytkownikiem (klientem) 
+poprzez przegl¹darkê internetow¹. Efektem komunikacji jest HTML odpowiednio interpretowany i wyœwietlany w oknie naszej przegl¹darki.
+Warto wspomnieæ, ¿e z ASP.NET otrzymujemy ca³y szereg korzyœci zawartych ju¿ w .NET Framework:
+	- logika (code-behind) naszej aplikacji jest oddzielona od widoku
+	- code-behind mo¿e byæ napisany w jêzyku kompilowalnym do CIL ( C# lub VB)
+	- mo¿liwoœæ kompilacji i debugowania w celu wykrycia b³êdów
+	- garbage-collector
+	- kod w pe³ni zorientowany obiektowo.
+
+
+ASP MVC jest to chyba najczêœciej wybierany model do tworzenia aplikacji w technologii ASP.NET. Jak sama nazwa wskazuje model ten
+korzysta z wzorca MVC. Dziêki temu otrzymujemy logiczn¹ strukturê katalogów, któr¹ intuicyjnie siê zarz¹dza, izolacjê logiki od 
+interfejsu u¿ytkownika, ³atw¹ testowalnoœæ kodu i wreszcie przejrzystoœæ. Wzorzec ten opiera siê na:
+	
+	- Models: Umieszczamy tu klasy bêd¹ce "zrzutem", lub te¿ modelem logicznym naszej bazy danych. W zale¿noœci od podejœcia,
+	  code-first  to my bêdziemy tworzyæ pliki zawarte w tym katalogu lub database-first pliki te bêd¹ automatycznie wykonanym zrzutem
+	  naszej bazy danych.
+
+	- VIew: Pliki odpowiedzialne s¹ za prezentacjê danych dostarczonych przez kontroler. W tej sekcji nie interesuje nas jak, 
+	  sk¹d dane zosta³y pobrane zajmujemy siê ich wyprowadzniem. To tutaj u¿ywamy HTML‘a, CSS i innych jêzyków do zarz¹dzania wygl¹dem 
+	  naszej strony. Podobnie jak w zwyk³ych stronach mo¿emy u¿ywaæ zewnêtrznych plików ze stylami czy skryptami. Platforma dostarcza 
+	  nam wiele Helperów, które przyspieszaj¹ tworzenie kodu. Najczêœciej u¿ywanych silnikiem do renderowania kodu w widoku jest 
+	  silnik Razor.
+
+	- Controllers: Kod zawarty w nich zajmuje siê odbiorem, analiz¹ i przetwarzaniem danych zarówno tych pobranych z bazy danych jak 
+	  i wprowadzonych przez u¿ytkownika choæby przez najbardziej prymitywny formularz. Kontroler ma mo¿liwoœæ zarz¹dania informacji z 
+	  bazy od modelu, wys³ania danych do modelu, który mo¿e zesk³adowaæ dane w bazie, wys³aæ dane do widoku, który jest wyœwietli 
+	  u¿ytkownikowi czy te¿ wywo³aæ inny kontroler w celu dalszego przetwarzania. 
+
+
+Struktura projektu ASP.NET MVC 5:
+
+	- Properties/AssemblyInfo.cs – definiujemy tu podstawowe informacje ( metadata ) o projekcie, które bêd¹ identyfikowaæ plik .dll/.exe
+
+	- References - tutaj linkujemy odwo³ania do bibliotek, innych projektów
+
+	- App_Data - tutaj przechowywana lokalna jest baza danych, mo¿emy tutaj umieœciæ tak¿e pliki, które bêdziemy czytaæ/zapisywaæ
+
+	- App_Start - zawiera pliki konfiguracyjne dla technologii u¿ytych w projekcie 
+
+	- BundleConfig.cs - regu³y zawarte w tym pliku pozwalaj¹ pobraæ wiele plików za jednym ¿¹daniem HTTP Request, jest to zwi¹zane z 
+	  tym, ¿e wiêkszoœæ przegl¹darek ma ograniczenie równoczesnych po³¹czeñ do szeœciu na hosta. Jeœli musimy pobraæ kilkanaœcie plików 
+	  przegl¹darka tworzy kolejki, przez co strona ³adowana jest wolniej, ma to szczególnie wa¿ne znaczenie przy pierwszym za³adowaniu strony, 
+	  kiedy to nie jest jeszcze  “sCACHEowana”,
+
+	- FilterConfig.cs – zwykle po klikniêciu na link wywo³ywana jest jakaœ akcja kontrolera, gdybyœmy chcieli, aby jakaœ logika 
+	  wykonywa³a siê dodatkowo przed lub po wywo³aniu akcji to ten plik w³aœnie jest takim miejscem do definicji owej logiki
+
+	- RouteConfig.cs - konfiguracja routingu. Adres URL w aplikacji webowej niesie ze sob¹ informacje zapisane wed³ug zdefiniowanego szablonu, 
+	  szablon ten definiujemy w tym pliku, aby nie mieæ problemów z odpowiednim odczytaniem danych. Zwykle w adresie URL przesy³ane s¹ nazwa 
+	  kontrolera i nazwa akcji do wywo³ania, mo¿emy np. wys³aæ jeszcze id u¿ytkownika do wyœwietlenia, dane te zapiszemy oddzielone za pomoc¹ 
+	  “/” w odpowiedniej kolejnoœci, kolejnoœæ t¹ w³aœnie zdefiniujemy w RouteConfig.cs
+
+	- Startup.Auth.cs - w tym pliku mo¿emy umo¿liwiæ logowanie do naszego serwisu za pomoc¹ kont twitter, facebook itp.
+
+	- Content - tutaj umieszcza siê pliki .css u¿ywane w projekcie
+
+	- Controllers - w tym katalogu umieszczamy klasy kontrolerów, których nazwy s¹ sk³adow¹ ¿¹dania HTTP. Nazwy plików oraz g³ówna klasa w pliku
+	  powinna mieæ koñcówkê ‘Controllers‘, a sama klasa musi dziedziczyæ po ‘Controller‘. Kontrolery zawieraj¹ metody, których nazwy tak¿e s¹ 
+	  czêœci¹ ¿¹dania HTTP, metody kontrolerów zwane s¹ akcjami i mog¹ zwracaæ HTML, dane, zapisane np. w JSON, a nawet rzucaæ wyj¹tkiem 
+
+	- fonts - czcionki wykorzystywane w aplikacji
+
+	- Models - folder, w który zawiera logikê (strukturê) naszej bazy danych. Podobnie jak i w przypadku kontrolerów pliki zawieraj¹ce klasy 
+	  maj¹ koñcówkê Models
+
+	- Scripts - tutaj umieszczamy pliki .js, nie jest konieczne, aby ka¿dy plik z rozszerzeniem .js znajdowa³ siê w tym katalogu, ale wygodnie
+	  jest tu umieszczaæ pliki z bibliotekami lub skryptami wykorzystywanymi w ca³ej aplikacji
+
+	- Views - tutaj umieszczane s¹ pliki, które organizuj¹ widok wyœwietlany u¿ytkownikowi. Ka¿dy kontroler ma swój folder o takiej samej nazwie,
+	  a ka¿da akcja plik .cshtml definiuj¹cy wygl¹d, rozmieszczenie danych
+
+	- Global.asax – w tym pliku mo¿emy umieœciæ kod, który wykona siê w odpowiedzi na zdarzenia systemowe ( errory, start aplikacji, koniec aplikacji itp.
+
+	- packages.config - informacja w XML o zainstalowanych pakietach
+
+	- Startup.cs - tutaj definiujemy regu³y OWIN,
+
+	- Web.config - zawiera opcje konfiguracyjne projektu ASP.NET, definiujemy w nim po³¹czenia z baz¹ danych, globalne zmienne, ustawienia bezpieczeñstwa, 
+	  kompilacji, jêzyk projektu itp.
+
+
+ORM (Object Relational Mapping) to idea u³atwiaj¹ca wspó³pracê obiektowych jêzyków programowania z relacyjnymi bazami danych. W ujêciu 
+Code First na podstawie utworzonych przez programistê klas generuj¹ bazê danych. G³ówn¹ zalet¹ jest oszczêdnoœæ czasu oraz prostota modyfikacji.
+
+Connection string ostarcza informacji, które s¹ potrzebne do komunikowania siê z baz¹ danych. Za pomoc¹ niego mo¿emy okreœlaæ parametry 
+specyfikuj¹ce po³¹czenie, takie jak:
+	
+	- Data Source – ten parametr okreœla nazwê instancji SQL Server’a
+
+	- AttachDbFileName – parametr okreœlaj¹cy miejsce przechowywania pliku bazy danych oraz jego nazwê,
+
+	- ID – login wykorzystywany do autoryzacji dostêpu do SQL Server’a
+
+	- Initial Catalog - okreœla nazwê bazy danych
+	
+	- Integrated Security – okreœla sposób logowania do instancji SQL Server:
+
+			- True - logowanie tylko za pomoc¹ Windows Integrated Security (systemu operacyjnego)
+
+			- False – logowanie za pomoc¹ ID i has³a dostarczonego w connection string
+	
+	- SSPI – ten parametr okreœla, ¿e zastosujemy logowania za pomoc¹ Windows Integrated Security, jeœli nie dostarczono ID i has³a w 
+	  connection string
+
+	- MultipleActiveResultSets - umo¿liwia równoleg³¹ egzekucjê zapytañ do bazy danych
+
+	- Password – has³o wykorzystywane do autoryzacji dostêpu do SQL Server’a
+
+	- User Instance – wykorzystywane tylko dla SQL Server Express, z parametrem True tworzy specjaln¹ instancjê SQL Server Express, w której 
+	  zwyk³y u¿ytkownik bêdzie mia³ prawa administratorskie.
+
+
+Przekazywanie danych do widoku odbywa siê na klika sposobów:
+	
+	- ViewData["variable"] w tym przypadku zmiennej variable przekazujemy jak¹œ wartoœæ np. ViewData["tytu³"] = "Jakiœ tytu³"
+
+	- ViewBag.variable w tym przypadku definiujemy zmienne tak jakby by³y w³aœciwoœciami klasy np. @ViewBag.variable
+
+	- Strongly typed view w tym podejœciu ka¿dy widok jest skojarzony z jakimœ modelem, którego implementacjê otrzymuje od kontrolera
+

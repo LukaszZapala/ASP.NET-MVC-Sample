@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.isValid = true;
+}
+
+<h2>Index</h2>
+
+<!--Przykładowa komórka np. tabeli-->
+<div class="row">
+    <div class="col-md-4">Div 1.i</div>
+    <div class="col-md-6">Div 2.i</div>
+    <div class="col-md-4">Div 3.i</div>
+    <div class="col-md-4">Div 4.i</div>
+</div>
+
+<!--Przykładowy formularz-->
+<div class="row">
+    <div class="panel panel-success">
+        <div class="panel-heading">Nagłówek</div>
+        <div class="panel-body">
+            <form method="post" action="sample/action">
+                <div class="form-group">
+                    <label>text</label>
+                    <input type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>password</label>
+                    <input type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <a href="http://google.pl" class="btn btn-primary btn-lg">
+                        Google
+                    </a>
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        Wyślij
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">Stopka</div>
+    </div>
+    @if(ViewBag.isValid)
+    {
+        <div class="alert alert-success">Udało się!</div>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nie udało się!</div>
+    }
+</div>
+
+<!--Przykładowa tabela-->
+<div class="row">
+    <div class="table">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>L.P.</th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Wiek</th>
+                    <th>Płeć</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i = 0; i < 15; i++)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@Guid.NewGuid()</td>
+                        <td>@Guid.NewGuid()</td>
+                        <td>@i*5</td>
+                        <td>@Guid.NewGuid()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
